@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
   controller.findCategories().then((category) => res.json(category))
 })
 router.get("/:id", async (req, res) => {
-  controller.findCategoriesById(req.params.id).then((category) => {
+  controller.findCategoryById(req.params.id).then((category) => {
     if (category == null) {
       res.status(404)
       res.json({ message: "Category not found" })
@@ -20,9 +20,16 @@ router.get("/:id", async (req, res) => {
   })
 })
 router.post("/", async (req, res) => {
-  controller.addCategory(req.body.name)
-  res.status(201)
-  res.json({ message : "Nueva categoria agregada."})
+  const created = await controller.addCategory(req.body.name)
+  console.log("post", created)
+  if (!created) {
+    res.status(400)
+    res.json({ message: "Category already exists" })
+    return
+  } else {
+    res.status(201)
+    res.json({ message: "Add successfully." })
+  }
 })
 router.put("/:id", async (req, res) => {
   console.log("put")

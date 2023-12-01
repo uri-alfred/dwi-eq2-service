@@ -14,12 +14,7 @@ function RepositorioUsuarios() {
       })
     },
     getByEmail: async (email) => {
-      return await Usuario.findUsuarioByEmail({
-        where: {
-          email: email,
-        },
-        attributes: ["user_id", "email"],
-      })
+      return await Usuario.findUsuarioByEmail(email)
     },
     updateById: async (id, usuario) => {
       return Usuario.updateUsuarioById(usuario, {

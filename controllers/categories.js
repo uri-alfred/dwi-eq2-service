@@ -1,25 +1,59 @@
-function Controller(repository) {
+function ControllerCategory(repository) {
   return {
     findCategories: async () => {
-      return await repository.getAll()
+      try {
+        const results = await repository.getAll()
+        return results
+      } catch (error) {
+        console.error("Error finding categories:", error)
+        throw error
+      }
     },
-    findCategoriesById: async (id) => {
-      return await repository.getById(id)
+
+    findCategoryById: async (id) => {
+      try {
+        const results = await repository.getById(id)
+        return results
+      } catch (error) {
+        console.error("Error finding category by id:", error)
+        throw error
+      }
     },
+
     addCategory: async (name) => {
-      await repository.create({
-        name: name,
-      })
+      try {
+        const existsCategory = await repository.getByName(name)
+        if (existsCategory) {
+          console.error("Error adding category: Category already exists")
+          return false
+        } else {
+          await repository.create(name)
+          return true
+        }
+      } catch (error) {
+        console.error("Error adding category:", error)
+        throw error
+      }
     },
+
     updateCategory: async (id, name) => {
-      await repository.update(id, {
-        name: name,
-      })
+      try {
+        await repository.updateById(id, { name })
+      } catch (error) {
+        console.error("Error updating category:", error)
+        throw error
+      }
     },
+
     deleteCategory: async (id) => {
-      await repository.delete(id)
+      try {
+        await repository.deleteById(id)
+      } catch (error) {
+        console.error("Error deleting category:", error)
+        throw error
+      }
     },
   }
 }
 
-module.exports = Controller
+module.exports = ControllerCategory

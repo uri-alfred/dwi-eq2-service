@@ -17,12 +17,11 @@ obtenerClavePrivada((err, res) => {
 
   /** Logear usuario */
 router.post("/", async (req, res) => {
-    console.log("Llega al router:", req.body);
     const result = await controlador.validarLoginUsuario(
       req.body.email,
       req.body.password
     );
-       console.log("res " + result);
+    //   console.log("res " + result);
     if (!result)
       return res.status(400).json({ error: "Usuario o pasword incorrecto" });
     else {

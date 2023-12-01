@@ -1,51 +1,76 @@
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt")
+
 function ControllerUsuario(repository) {
   return {
     obtenerUsuario: async () => {
-      return await repository.getAll();
+      try {
+        const results = repository.getAll()
+        return results
+      } catch (error) {
+        console.error("Error obtaining usuarios:", error)
+        throw error
+      }
     },
+
     obtenerUsuarioPorId: async (id) => {
-      return await repository.getById(id);
-    },
-    validarLoginUsuario: async (username, myPlainPassword) => {
-      const user = await repository.getByEmail(username);
-      if (!user) return false;
-      const result = await bcrypt.compare(myPlainPassword, user.password);
-      return result;
+      try {
+        const results = repository.getById(id)
+        return results
+      } catch (error) {
+        console.error("Error obtaining usuario by id:", error)
+        throw error
+      }
     },
     obtenerUsuarioPorEmail: async (email) => {
       return await repository.getByEmail(email);
     },
-    agregarUsuario: async (email, myPlainPassword, nombre, apellido) => {
-      bcrypt.genSalt(10, function (err, salt) {
-        bcrypt.hash(myPlainPassword, salt, async function (err, hash) {
-          await repository.create({
-            email: email,
-            password: hash,
-            nombre: nombre,
-            apellido: apellido,
-          });
-        });
-      });
+    validarLoginUsuario: async (email, myPlainPassword) => {
+      try {
+        const user = await repository.getByEmail(email)
+        if (!user) return false
+
+        const result = await bcrypt.compare(myPlainPassword, user.password)
+        return result
+      } catch (error) {
+        console.error("Error validating login:", error)
+        throw error
+      }
     },
+
+    agregarUsuario: async (email, myPlainPassword) => {
+      try {
+        const existsUsuario = await repository.getByEmail(email)
+        if (existsUsuario) {
+          console.error("Error adding usuario: Usuario already exists")
+          return false
+        } else {
+          await repository.create(email, myPlainPassword)
+          return true
+        }
+      } catch (error) {
+        console.error("Error adding usuario:", error)
+        throw error
+      }
+    },
+
     actualizarUsuario: async (params) => {
-      bcrypt.genSalt(10, function (err, salt) {
-        bcrypt.hash(params.password, salt, async function (err, hash) {
-          const response = await repository.updateById(params.id, {
-            email: params.email,
-            password: hash,
-            nombre: params.nombre,
-            apellido: params.apellido,
-          });
-          console.log(response);
-        });
-      });
+      try {
+        return await repository.updateById(params.id, params)
+      } catch (error) {
+        console.error("Error updating usuario:", error)
+        throw error
+      }
     },
+
     eliminarUsuario: async (id) => {
-      const response = await repository.deleteById(id);
-      console.log(response);
+      try {
+        return await repository.deleteById(id)
+      } catch (error) {
+        console.error("Error deleting usuario:", error)
+        throw error
+      }
     },
-  };
+  }
 }
 
-module.exports = ControllerUsuario;
+module.exports = ControllerUsuario

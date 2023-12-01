@@ -19,9 +19,9 @@ router.get("/:id", async (req, res) => {
 
 /** Guarda un usuario */
 router.post("/", async (req, res) => {
-  controlador.agregarUsuario(req.body.email, req.body.password, req.body.nombre, req.body.apellido);
+  controlador.agregarUsuario(req.body.email, req.body.password);
   res.status(200);
-  res.json({ message: "Usuario creado" });
+  res.json({ message: "Add successfully." });
 });
 
 /** Actualiza un usuario */
@@ -29,14 +29,14 @@ router.put("/", async (req, res) => {
   console.log("actualizar");
   controlador.actualizarUsuario(req.body);
   res.status(200);
-  res.json({ message: "Usuario actualizado." });
+  res.json({ message: "Update successfully." });
 });
 
 /** Elimina un usuario */
 router.delete("/:id", async (req, res) => {
   controlador.eliminarUsuario(req.params.id);
   res.status(200);
-  res.json({ message: "Usuarios Eliminado." });
+  res.json({ message: "Deleted successfully." });
 });
 
 module.exports = router;
