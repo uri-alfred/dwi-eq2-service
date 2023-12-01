@@ -31,7 +31,7 @@ app.use(cors({
   allowedMethods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
   maxAge: 600,
-  exposedHeaders: ['*', 'Authorization']
+  exposedHeaders: ['*', 'Authorization', 'Access-Control-Allow-Origin']
 }));
 
 /**
