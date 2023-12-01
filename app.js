@@ -26,7 +26,7 @@ app.use(bodyParser.json())
 
 app.use(cookiePar())
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: process.env.CLIENT_URL,
   allowedHeaders: ["Content-Type", "Authorization", 'x-csrf-token'],
   allowedMethods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
