@@ -42,7 +42,7 @@ router.post("/", async (req, res) => {
           secure: true,
           domain: process.env.SERVICE_DOMAIN,
           path: "/",
-          sameSite: "strict"
+          sameSite: "None"
       });
   
       //  console.log(token);
