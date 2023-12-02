@@ -40,7 +40,7 @@ router.post("/", async (req, res) => {
       res.cookie("auth-token", token, {
           httpOnly: true,
           secure: true,
-          domain: process.env.CLIENT_DOMAIN,
+          domain: process.env.SERVICE_DOMAIN,
           path: "/",
           sameSite: "lax"
       });
