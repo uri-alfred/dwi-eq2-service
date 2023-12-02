@@ -2,8 +2,8 @@ const Category = require("./models/Category")
 
 function RepositoryCategory() {
   return {
-    create: async (category) => {
-      await Category.create(category)
+    create: async (name) => {
+      await Category.create(name)
     },
 
     getAll: async () => {
@@ -15,11 +15,11 @@ function RepositoryCategory() {
     },
 
     updateById: async (id, category) => {
-      return await Category.update(category, { where: { id } })
+      return await Category.update(id, category)
     },
 
     deleteById: async (id) => {
-      return await Category.destroy({ where: { id } })
+      return await Category.destroy( id )
     },
     getByName: async (name) => {
       return await Category.findByName(name)

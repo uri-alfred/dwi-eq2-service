@@ -6,7 +6,9 @@ const createUsuarioTable = () => {
     CREATE TABLE IF NOT EXISTS usuarios (
       user_id INT AUTO_INCREMENT PRIMARY KEY,
       email VARCHAR(255) UNIQUE,
-      password VARCHAR(255)
+      password VARCHAR(255),
+      nombre VARCHAR(255),
+      apellido VARCHAR(255)
     )
   `
 
@@ -23,14 +25,14 @@ const createUsuarioTable = () => {
 
 createUsuarioTable()
 
-const addUsuario = async (email, myPlainPassword) => {
+const addUsuario = async (email, myPlainPassword,nombre, apellido) => {
   try {
     const saltRounds = 10
     const salt = await bcrypt.genSalt(saltRounds)
     const hash = await bcrypt.hash(myPlainPassword, salt)
 
-    const insertQuery = "INSERT INTO usuarios (email, password) VALUES (?, ?)"
-    await connection.promise().query(insertQuery, [email, hash])
+    const insertQuery = "INSERT INTO usuarios (email, password) VALUES (?, ?, ?, ?)"
+    await connection.promise().query(insertQuery, [email, hash, nombre, apellido])
   } catch (error) {
     console.error("Error adding usuario:", error)
     throw error
@@ -44,7 +46,7 @@ const findAllUsuarios = async () => {
 }
 
 const findUsuarioById = async (id) => {
-  const selectQuery = "SELECT user_id, email FROM usuarios WHERE user_id = ?"
+  const selectQuery = "SELECT user_id, email, nombre, apellido FROM usuarios WHERE user_id = ?"
   const [results] = await connection.promise().query(selectQuery, [id])
   return results[0]
 }
@@ -56,14 +58,10 @@ const findUsuarioByEmail = async (email) => {
 }
 
 const updateUsuarioById = async (id, usuario) => {
-  const { email, password } = usuario
-  const saltRounds = 10
-  const salt = await bcrypt.genSalt(saltRounds)
-  const hash = await bcrypt.hash(password, salt)
-
+  const { email, nombre, apellido } = usuario
   const updateQuery =
-    "UPDATE usuarios SET email = ?, password = ? WHERE user_id = ?"
-  await connection.promise().query(updateQuery, [email, hash, id])
+    "UPDATE usuarios SET email = ?, nombre = ?, apellido = ? WHERE user_id = ?"
+  await connection.promise().query(updateQuery, [email, nombre, apellido, id])
 }
 
 const deleteUsuarioById = async (id) => {

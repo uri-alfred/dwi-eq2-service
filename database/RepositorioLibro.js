@@ -15,11 +15,11 @@ function RepositoryLibro() {
     },
 
     updateById: async (id, libro) => {
-      return await Libro.update(libro, { where: { id } })
+      return await Libro.update(id, libro)
     },
 
     deleteById: async (id) => {
-      return await Libro.destroy({ where: { id } })
+      return await Libro.destroy(id)
     },
   }
 }

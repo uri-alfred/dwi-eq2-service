@@ -22,9 +22,9 @@ const createCategoriesTable = () => {
 createCategoriesTable()
 
 const Category = {
-  create: async (category) => {
+  create: async (name) => {
     const insertQuery = "INSERT INTO categories (name) VALUES (?)"
-    await connection.promise().query(insertQuery, [category.name])
+    await connection.promise().query(insertQuery, [name])
   },
 
   findAll: async () => {
@@ -39,16 +39,16 @@ const Category = {
     return results[0]
   },
 
-  update: async (category, conditions) => {
+  update: async (id, category) => {
     const updateQuery = "UPDATE categories SET name = ? WHERE id = ?"
     return connection
       .promise()
-      .query(updateQuery, [category.name, conditions.where.id])
+      .query(updateQuery, [category.name, id])
   },
 
-  destroy: async (conditions) => {
+  destroy: async (id) => {
     const deleteQuery = "DELETE FROM categories WHERE id = ?"
-    return connection.promise().query(deleteQuery, [conditions.where.id])
+    return connection.promise().query(deleteQuery, [id])
   },
   findByName: async (name) => {
     const selectQuery = "SELECT * FROM categories WHERE name = ?"

@@ -8,7 +8,7 @@ const createLibrosTable = () => {
       anio_lib INT,
       autor_lib VARCHAR(255),
       editorial_lib VARCHAR(255),
-      fk_cat INT
+      fk_cat VARCHAR(255)
     )
   `
 
@@ -27,17 +27,17 @@ createLibrosTable()
 
 const Libro = {
   create: async (libro) => {
-    const { titulo_lib, anio_lib, autor_lib, editorial_lib, fk_cat } = libro
+    const { titulo, anio, autor, editorial, cat } = libro
     const insertQuery =
       "INSERT INTO libros (titulo_lib, anio_lib, autor_lib, editorial_lib, fk_cat) VALUES (?, ?, ?, ?, ?)"
     await connection
       .promise()
       .query(insertQuery, [
-        titulo_lib,
-        anio_lib,
-        autor_lib,
-        editorial_lib,
-        fk_cat,
+        titulo,
+        anio,
+        autor,
+        editorial,
+        cat,
       ])
   },
 
@@ -53,25 +53,25 @@ const Libro = {
     return results[0]
   },
 
-  update: async (libro, conditions) => {
-    const { titulo_lib, anio_lib, autor_lib, editorial_lib, fk_cat } = libro
+  update: async (id, libro) => {
+    const { titulo, anio, autor, editorial, cat } = libro
     const updateQuery =
       "UPDATE libros SET titulo_lib = ?, anio_lib = ?, autor_lib = ?, editorial_lib = ?, fk_cat = ? WHERE id = ?"
     return connection
       .promise()
       .query(updateQuery, [
-        titulo_lib,
-        anio_lib,
-        autor_lib,
-        editorial_lib,
-        fk_cat,
-        conditions.where.id,
+        titulo,
+        anio,
+        autor,
+        editorial,
+        cat,
+        id,
       ])
   },
 
-  destroy: async (conditions) => {
+  destroy: async (id) => {
     const deleteQuery = "DELETE FROM libros WHERE id = ?"
-    return connection.promise().query(deleteQuery, [conditions.where.id])
+    return connection.promise().query(deleteQuery, [id])
   },
 }
 

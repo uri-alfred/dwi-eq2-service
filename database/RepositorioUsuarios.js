@@ -9,26 +9,16 @@ function RepositorioUsuarios() {
       return await Usuario.findAllUsuarios()
     },
     getById: async (id) => {
-      return await Usuario.findUsuarioById(id, {
-        attributes: ["user_id", "email"],
-      })
+      return await Usuario.findUsuarioById(id)
     },
     getByEmail: async (email) => {
       return await Usuario.findUsuarioByEmail(email)
     },
     updateById: async (id, usuario) => {
-      return Usuario.updateUsuarioById(usuario, {
-        where: {
-          user_id: id,
-        },
-      })
+      return Usuario.updateUsuarioById(id, usuario)
     },
     deleteById: async (id) => {
-      return Usuario.deleteUsuarioById({
-        where: {
-          user_id: id,
-        },
-      })
+      return Usuario.deleteUsuarioById(id)
     },
   }
 }
