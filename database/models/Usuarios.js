@@ -31,7 +31,7 @@ const addUsuario = async (email, myPlainPassword,nombre, apellido) => {
     const salt = await bcrypt.genSalt(saltRounds)
     const hash = await bcrypt.hash(myPlainPassword, salt)
 
-    const insertQuery = "INSERT INTO usuarios (email, password) VALUES (?, ?, ?, ?)"
+    const insertQuery = "INSERT INTO usuarios (email, password, nombre, apellido) VALUES (?, ?, ?, ?)"
     await connection.promise().query(insertQuery, [email, hash, nombre, apellido])
   } catch (error) {
     console.error("Error adding usuario:", error)

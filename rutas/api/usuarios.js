@@ -19,7 +19,7 @@ router.get("/:id", async (req, res) => {
 
 /** Guarda un usuario */
 router.post("/", async (req, res) => {
-  controlador.agregarUsuario(req.body.email, req.body.password);
+  controlador.agregarUsuario(req.body.email, req.body.password, req.body.nombre, req.body.apellido);
   res.status(200);
   res.json({ message: "Add successfully." });
 });

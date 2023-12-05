@@ -2,8 +2,8 @@ const Usuario = require("./models/Usuarios")
 
 function RepositorioUsuarios() {
   return {
-    create: async (usuario, myPlainPassword) => {
-      await Usuario.addUsuario(usuario, myPlainPassword)
+    create: async (usuario, myPlainPassword, nombre, apellido) => {
+      await Usuario.addUsuario(usuario, myPlainPassword, nombre, apellido)
     },
     getAll: async () => {
       return await Usuario.findAllUsuarios()

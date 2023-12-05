@@ -37,14 +37,14 @@ function ControllerUsuario(repository) {
       }
     },
 
-    agregarUsuario: async (email, myPlainPassword) => {
+    agregarUsuario: async (email, myPlainPassword, nombre, apellido) => {
       try {
         const existsUsuario = await repository.getByEmail(email)
         if (existsUsuario) {
           console.error("Error adding usuario: Usuario already exists")
           return false
         } else {
-          await repository.create(email, myPlainPassword)
+          await repository.create(email, myPlainPassword, nombre, apellido)
           return true
         }
       } catch (error) {
