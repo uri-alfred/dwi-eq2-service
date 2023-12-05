@@ -52,7 +52,7 @@ const findUsuarioById = async (id) => {
 }
 
 const findUsuarioByEmail = async (email) => {
-  const selectQuery = "SELECT user_id, email, nombre, apellido password FROM usuarios WHERE email = ?"
+  const selectQuery = "SELECT user_id, email, nombre, apellido, password FROM usuarios WHERE email = ?"
   const [results] = await connection.promise().query(selectQuery, [email])
   return results[0]
 }
